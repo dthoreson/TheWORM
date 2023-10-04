@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Russo+One&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <title>Search for New Books</title>
+    <style>
+        * {
+            font-family: 'Comfortaa', cursive;
+            margin: auto;
+            padding: 0px;
+        }
+
+        body {
+            background-image: url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGlicmFyeXxlbnwwfHwwfHw%3D&w=1000&q=80");
+            background-size: contain;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #1C0A06;
+            color: white;
+            height: 127px;
+        }
+
+        nav>a {
+            text-decoration: none;
+            color: white;
+        }
+
+        #button {
+            box-shadow: 2px 3px #1C0A06;
+        }
+
+        a.button {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        background-color: #1C0A06;
+        border-radius: 5px;
+        margin: 20px;
+        border: 2px solid orange;
+        }
+
+        #results {
+            width: 900px;
+            background-color: white;
+            padding-bottom: 30px;
+            margin-top: 30px;
+        }
+
+        .main_content {
+            width: 1000px;
+            height: auto;
+            background-color: white;
+            opacity: 90%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .hello {
+            width: 600px;
+            color: black;
+            margin: 50px;
+        }
+
+        img {
+            width: 200px;
+            background-color: white;
+            margin-right: 30px;
+        }
+
+        form {
+            margin-top: 10px;
+        }
+    </style>
+
+<body>
+    <nav>
+        <a href="/main">LOGOUT</a>
+        <a href="/my_library">MY BOOKSHELF</a>
+        <img class="logo" src="/static/images/the_worm_logo.png" alt="">
+        <a href="/dashboard">DASHBOARD</a>
+        <a href="#">EXPLORE</a>
+    </nav>
+    <div class="main_content">
+        <h1 class="hello">Google Books API Search</h1>
+
+        <!-- THIS IS WHERE THE DYNAMIC SEARCH BAR IS -->
+        <form id="search">
+            <label for="query">Search for books:</label>
+            <input type="text" id="query" name="query">
+            <button type="submit" id="button">Search</button>
+        </form>
+
+        <!-- THIS IS WHERE THE RESULTS GET DISPLAYED OUT FROM THE API -->
+        <form id="results"></form>
+        
+
+        <!-- THIS IS THE OPTION FOR CREATING YOUR OWN BOOK ENTRY -->
+        <div>
+            <h1>STILL CAN'T FIND WHAT YOU ARE LOOKING FOR?...</h1>
+            <a href="/create_book_form" class="button">CREATE YOUR OWN BOOK ENTRY</a>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> <!--THIS IS THE BASE URL-->
+    <script>
+        
+        $(function () {
+            $('#search').submit(function (event) {
+                event.preventDefault();
+                var query = $('#query').val();
+                var url = 'https://www.googleapis.com/books/v1/volumes?q=' + encodeURIComponent(query);
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    success: function (data) {
+                        $('#results').empty();
+                        $.each(data.items, function (i, item) {
+                            var title = item.volumeInfo.title;
+                            var author = item.volumeInfo.authors;
+                            var num_of_pages = parseInt(item.volumeInfo.pageCount) ? item.volumeInfo.pageCount : 0;
+                            var description = item.volumeInfo.description;
+                            var genre = item.volumeInfo.categories ? item.volumeInfo.categories[0] : '';
+                            var image = item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : '';
+                            var bookData = '<form action="/save_book" method="POST">' + 
+                                '<input type="hidden" name="title" value="' + title + '">' +
+                                '<input type="hidden" name="author" value="' + author + '">' +
+                                '<input type="hidden" name="num_of_pages" value="' + num_of_pages + '">' +
+                                '<input type="hidden" name="genre" value="' + genre + '">' +
+                                '<input type="hidden" name="description" value="' + description + '">' +
+                                '<input type="hidden" name="image" value="' + image + '">' +
+                                '<div style="display:flex;">' +
+                                '<div>' + '<img src="' + image + '">' + 
+                                '<button type="submit">Add to my Bookshelf</button>' + '</div>' +
+                                '<div>' + '<h1 style="font-weight:bold">' + title + '</h1>' + '<br>' +
+                                '<label style="font-weight:bold">Author: </label>' + author + '<br>' +
+                                '<label style="font-weight:bold">Genre: </label>' + genre + '<br>' +
+                                '<label style="font-weight:bold">Total Pages: </label>' + num_of_pages + '<br>' +
+                                '<label style="font-weight:bold">Description: </label>' + description + '</div>' +
+                                '</div>' + '</form>' + '<br>' + '<br>' + '<br>' + '<br>' + '<br>' + '<br>';
+                            $('#results').append(bookData);
+                        });
+                    },
+                    error: function () {
+                        console.log('Error getting books');
+                    }
+                });
+            });
+        });
+        function saveBook(title, author, num_of_pages, genre, description, image) {
+            event.preventDefault();
+            var bookData = {
+                title: title,
+                author: author,
+                num_of_pages: num_of_pages,
+                genre: genre,
+                description: description,
+                image: image
+            };
+            
+            $.ajax({
+                url: '/save_book',
+                method: 'POST',
+                data: JSON.stringify(bookData),
+                contentType: 'application/json',
+                success: function (response) {
+                    console.log('Book saved successfully:', response);
+                },
+                error: function (error) {
+                    console.error('Error saving book:', error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

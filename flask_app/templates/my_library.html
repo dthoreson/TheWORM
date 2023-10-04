@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *{
+            font-family: 'Comfortaa', cursive;
+            margin: auto;
+            padding: 0px;
+        }
+        body{
+            background-image: url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGlicmFyeXxlbnwwfHwwfHw%3D&w=1000&q=80");
+            background-size:cover;
+        }
+        nav{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #1C0A06;
+            color: white;
+            height: 127px;
+        }
+        nav > a{
+            text-decoration: none;
+            color: white;
+        }
+        table{
+            border: 1px solid black;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 10px;
+        }
+        .bookshelf{
+            width: 800px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: white;
+            padding-bottom:30px;
+            margin-top: 30px;
+        }
+        .profile{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .profile > img{
+            width: 100px;
+            margin-right: 30px;
+        }
+        .main_content{
+            width: 900px;
+            height: 1000px;
+            background-color: white;
+            opacity: 85%;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .hello{
+            width: 600px;
+            color: black;
+            margin: 0px;
+            margin-top: 30px;
+        }
+        .logo{
+            height: 127px;
+        }
+    </style>
+    <title>My Virtual Library</title>
+</head>
+<body>
+    <nav>
+        <a href="/main">LOGOUT</a>
+        <img class="logo" src="/static/images/the_worm_logo.png" alt="">
+        <a href="/dashboard">DASHBOARD</a>
+        <a href="/dashboard#explore">EXPLORE</a>
+    </nav>
+    <div class="main_content">
+        <div
+        class="hello">
+            <h1>Welcome, {{logged_in_user.first_name}}</h1>
+        </div>
+        <div class="bookshelf">
+            <div class="profile">
+                <img src="/static/images/books_logo.png" alt="">
+                <h1>My Bookshelf</h1>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                            <th>Title</th>
+                            <th>Author</th>
+                            <th>Genre</th>
+                            <th>Actions</th>
+                    </thead>
+                    <tbody>
+                        {% for book in library: %}
+                        <tr>
+                            {% if session['uid'] == book.owner.id %}
+                                <td>{{book.title}}</td>
+                                <td>{{book.author}}</td>
+                                <td>{{book.genre}}</td>
+                                <td>
+                                    <a href="/show_one/{{book.id}}">Show</a>
+                                    <a href="/book/{{book.id}}/delete"> | Delete</a>
+                                    <a href="/edit/book/{{book.id}}"> | Update</a>
+                                </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                        <!-- <tr>
+                            <td>Hunger Games</td>
+                            <td>Suzanne Collins</td>
+                            <td>Sci-Fi</td>
+                            <td>
+                                <a href="/show_one">Show</a>
+                                <a href="#"> | Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ready Player One</td>
+                            <td>Ernest Cline</td>
+                            <td>Pop-Culture Fiction</td>
+                            <td>
+                                <a href="/show_one">Show</a>
+                                <a href="#"> | Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Holes</td>
+                            <td>Louis Sachar</td>
+                            <td>Young Adult</td>
+                            <td>
+                                <a href="/show_one">Show</a>
+                                <a href="#"> | Delete</a>
+                            </td>
+                        </tr> -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
