@@ -79,7 +79,7 @@ class User:
             flash("Last name must be at least 2 characters", "register")
             is_valid= False
         if not EMAIL_REGEX.match(user['email']):#THIS CHECKS THE EMAILS FORMATTING.
-            flash("Invalid Email!!!")
+            flash("Invalid Email!!!", "register")
             is_valid=False
         if len(user['password']) < 8:
             flash("Password must be at least 8 characters", "register")
