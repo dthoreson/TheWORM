@@ -45,7 +45,7 @@
         margin-top: 30px;
         }
 
-        a.button {
+        .button {
         display: inline-block;
         padding: 10px 20px;
         font-size: 16px;
@@ -56,6 +56,7 @@
         background-color: #1C0A06;
         border-radius: 5px;
         margin: 20px;
+        border: 2px solid orange;
         }
 
         th, td {
@@ -75,10 +76,10 @@
         .profile{
         display: flex;
         flex-direction: column;
-        text-align: left;
+        margin-left: 30px;
         /* background-color: red; */
-
         }
+        
         .profile > img{
             width: 100px;
             margin-right: 30px;
@@ -116,7 +117,6 @@
             height: auto;
             margin-bottom: 20px;
             font-size: 40px;
-            /* padding-left: 25px; */
             text-align: center;
             /* background-color: green;  */
         }
@@ -127,7 +127,7 @@
         <a href="/my_library">MY BOOKSHELF</a>
         <img src="/static/images/the_worm_logo.png" alt="">
         <a href="/dashboard">DASHBOARD</a>
-        <a href="#">EXPLORE</a>
+        <a href="/dashboard#explore">EXPLORE</a>
     </nav>
     <div class="main_content">
         <div class="bookshelf">
@@ -136,14 +136,13 @@
             </div>
             <div class="profile">
                 <h1 class="title">{{my_book.title}}</h1>
-                <h1>Author: {{my_book.author}}</h1>
-                <h1>Genre: {{my_book.genre}}</h1>
-                <h1>Pages: {{my_book.num_of_pages}}</h1>
+                <h1><span style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Author:</span> {{my_book.author}} <br><span style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Genre:</span> {{my_book.genre}} <br><span style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Pages:</span> {{my_book.num_of_pages}}</h1>
             </div>
         </div>
         <div class="info">
-            <h1>Description:</h1>
-            <p>{{my_book.description}}</p> 
+            <h1 style="font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">Description:</h1>
+            <br>
+            <h2>{{my_book.description}}</h2> 
             
         </div>
         <a class="button" href="/book/{{my_book.id}}/delete">Remove from Bookshelf</a>
