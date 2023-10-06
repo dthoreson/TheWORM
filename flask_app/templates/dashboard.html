@@ -138,6 +138,36 @@
             padding: 30px;
             padding-bottom: 50px;
         }
+        .music_contain{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 550px;
+            width: 100%;
+            background-color: green;
+            /* background-image: url("/static/images/retroRadioImage.jpg"); */
+            background-position: center;
+            background-size: cover;
+            position: relative;
+            /* padding-bottom: 32%; */
+            
+        }
+        .player{
+            position: absolute;
+            top: 50%; /* Adjust as needed */
+            left: 60%; /* Adjust as needed */
+            transform: translate(-50%, -50%); /* Center the image */
+            z-index: 1; /* Place the image above the video */
+        }
+        .youtube{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
         table{
             border: 1px solid black;
             border-collapse: collapse;
@@ -185,12 +215,14 @@
                 <p class="hero">EVENING READS</p>
                 </div>
             </div>
+
             <div class="about_contain">
                 <div class="about" id="about">
                     <h1>ABOUT</h1>
-                    <p>Hey there, and welcome to TheWORM! I'm genuinely glad you're here, and I'm hoping this app can offer you the same organization boost it gave me. I've always wanted an app to create a virtual home for all my books—a place where no matter where I am, I can easily dive into any of my stories. And so, TheWORM was born!</p>
+                    <p>Hey there, and welcome to TheWORM! I'm genuinely glad you're here, and I'm hoping this app can offer you the same organization boost it gave me. I've always wanted an app to create a virtual home for all my books—a place where no matter where I am, I can easily dive into any of my stories and know what I currently have on inventory at home. And so, TheWORM was born!</p>
                 </div>
             </div>
+
             <div class="explore_contain_background"></div>
             <div class="explore_contain">
                 <div class="explore" id="explore">
@@ -201,9 +233,13 @@
                     <img src="/static/images/book_searching_img.jpeg" alt="">
                 </div>
             </div>
+
             <div class="pop_reads_contain">
-                <h1>Most Popular Reads: </h1>
-                <table>
+                <h1>Check out new Spotify feature below! </h1>
+                <br>
+                <h2>Added Spotify API so you can listen to your favorite tunes while you visit your account.</h2>
+                <image style="height: 50px; margin-top: 30px;" src="https://cdn.pixabay.com/animation/2022/10/27/12/59/12-59-10-594_512.gif"></image>
+                <!-- <table>
                     <thead>
                             <th>Title</th>
                             <th>Author</th>
@@ -248,57 +284,26 @@
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> -->
             </div>
-    <!-- THIS CAN BE WHERE I PLACE MY WORM SPOTIFY SECTION IF I HAVE TIME -->
-            <footer>
-                <div class="foot_links">
-                    <a href="/main">LOGOUT</a>
-                    <a href="my_library">MY BOOKSHELF</a>
-                    <a href="#about">ABOUT</a>
-                    <a href="#explore">EXPLORE</a>
-                </div>
-                <div class="foot_logo">
-                    <img src="static/images/the_worm_logo.png" alt="">
-                </div>
-            </footer>
+
+            <!-- THIS CAN BE WHERE I PLACE MY WORM SPOTIFY SECTION IF I HAVE TIME -->
+            <div class="music_contain">
+                <iframe class="youtube" src="https://www.youtube.com/embed/sR6tjNq8Ywk?autoplay=1&controls=0&loop=1&mute=1" height="100%" width="100%"></iframe>
+                <iframe class="player" src="https://open.spotify.com/embed/playlist/3WLDIcG4Cx2UOPy0rbFhQn" width="20%" height="67%" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
         </div>
     </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    $(function() {
-    $('form').submit(function(event) {
-        event.preventDefault();
-        var query = $('#query').val();
-        var url = 'https://www.googleapis.com/books/v1/volumes?q=' + encodeURIComponent(query);
-        $.ajax({
-        url: url,
-        dataType: 'json',
-        success: function(data) {
-            $('#results').empty();
-            $.each(data.items, function(i, item) {
-            var title = item.volumeInfo.title;
-            var author = item.volumeInfo.authors;
-            var description = item.volumeInfo.description;
-            var thumbnail = item.volumeInfo.imageLinks ? item.volumeInfo.imageLinks.thumbnail : '';
-            var infoLink = item.volumeInfo.infoLink;
-            var genre = item.volumeInfo.categories ? item.volumeInfo.categories[0] : '';
-            var book = '<div class="book">' +
-                '<img src="' + thumbnail + '">' +
-                '<h2><a href="' + infoLink + '">' + title + '</a></h2>' +
-                '<p>' + author + '</p>' +
-                '<p>' + description + '</p>' +
-                '<p>' + genre + '</p>' +
-                '</div>';
-            $('#results').append(book);
-            });
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            console.log(textStatus, errorThrown);
-        }
-        });
-    });
-    });
-</script>
+    <footer>
+        <div class="foot_links">
+            <a href="/main">LOGOUT</a>
+            <a href="my_library">MY BOOKSHELF</a>
+            <a href="#about">ABOUT</a>
+            <a href="#explore">EXPLORE</a>
+        </div>
+        <div class="foot_logo">
+            <img src="static/images/the_worm_logo.png" alt="">
+        </div>
+    </footer>
 </body>
 </html>

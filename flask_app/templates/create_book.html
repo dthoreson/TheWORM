@@ -25,9 +25,14 @@
             padding: 0px;
         }
 
-        body {
+        /* body {
             background-image: url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGlicmFyeXxlbnwwfHwwfHw%3D&w=1000&q=80");
             background-size: contain;
+        } */
+
+        body{
+            background-image: url("https://images.unsplash.com/photo-1481627834876-b7833e8f5570?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bGlicmFyeXxlbnwwfHwwfHw%3D&w=1000&q=80");
+            background-size:cover;
         }
 
         nav {
@@ -48,7 +53,7 @@
             box-shadow: 2px 3px #1C0A06;
         }
 
-        a.button {
+        button {
         display: inline-block;
         padding: 10px 20px;
         font-size: 16px;
@@ -60,13 +65,6 @@
         border-radius: 5px;
         margin: 20px;
         border: 2px solid orange;
-        }
-
-        #results {
-            width: 900px;
-            background-color: white;
-            padding-bottom: 30px;
-            margin-top: 30px;
         }
 
         .main_content {
@@ -85,6 +83,8 @@
             width: 600px;
             color: black;
             margin: 50px;
+            font-size: 40px;
+            font-weight: bolder;
         }
 
         img {
@@ -104,7 +104,7 @@
         <a href="/my_library">MY BOOKSHELF</a>
         <img class="logo" src="/static/images/the_worm_logo.png" alt="">
         <a href="/dashboard">DASHBOARD</a>
-        <a href="#">EXPLORE</a>
+        <a href="/dashboard#explore">EXPLORE</a>
     </nav>
     <div class="main_content">
         <h1 class="hello">Create Your Own Book Entry!:</h1>
@@ -120,32 +120,32 @@
         <form action="/create_book" method="POST">
             <div>
                 <label for="">Book Title:</label>
-                <input type="text" id="" name="title">
+                <input type="text" name="title" class="form-control">
             </div>
             <div>
                 <label for="">Book Author:</label>
-                <input type="text" name="author" id="">
+                <input type="text" name="author" class="form-control">
             </div>
             <div>
                 <label for="">Number of Pages:</label>
-                <input type="text" name="num_of_pages" id="">
+                <input type="text" name="num_of_pages" class="form-control">
             </div>
             <div>
                 <label for="">Genre:</label>
-                <input type="text" name="genre" id="">
+                <input type="text" name="genre" class="form-control">
             </div>
             <div>
                 <label for="">Book Description:</label>
-                <input type="text" name="description" id="">
+                <textarea style="height: 150px;" type="text" name="description" class="form-control"></textarea>
             </div>
             <div>
                 <label for="">Book Image:</label>
-                <input type="text" name="image" id="">
+                <input type="text" name="image" class="form-control">
             </div>
             <div>
-                <label for=""> User ID: </label>
-                <input type="text" name="user_id" value="{{session.uid}}">
+                <input type="hidden" name="user_id" value="{{session.uid}}">
             </div>
+            <br>
             <button type="submit" id="button">Save Book to Your Bookshelf!</button>
         </form>
     </div>
